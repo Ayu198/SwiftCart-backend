@@ -34,7 +34,7 @@ public class ProductController {
     @GetMapping()
     public ResponseEntity<Page<Product>> getAllProducts(
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) String band,
+            @RequestParam(required = false) String brand,
             @RequestParam(required = false) String color,
             @RequestParam(required = false) String size,
             @RequestParam(required = false) Integer minPrice,
@@ -45,7 +45,7 @@ public class ProductController {
             @RequestParam(defaultValue = "0") Integer PageNumber
     ) {
         return new ResponseEntity<>(productService.getAllProducts(category,
-                band, color, size, minPrice, maxPrice,
+                brand, color, size, minPrice, maxPrice,
                 minDiscount, sort, stock, PageNumber) , HttpStatus.OK);
     }
 }

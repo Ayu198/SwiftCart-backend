@@ -4,6 +4,7 @@ import com.swiftcart.ecommerce.modal.HomeCategory;
 import com.swiftcart.ecommerce.repository.HomeCategoryRepository;
 import com.swiftcart.ecommerce.service.HomeCategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,20 @@ public class HomeCategoryServiceImpl implements HomeCategoryService {
 
     @Override
     public List<HomeCategory> createCategories(List<HomeCategory> homeCategories) {
-        if(homeCategoryRepository.findAll().isEmpty()) {
-            return homeCategoryRepository.saveAll(homeCategories);
+
+        List<HomeCategory> newCategories = homeCategories.stream()
+                .filter(category ->
+                        !homeCategoryRepository.existsByCategoryIdAndSection(
+                                category.getCategoryId(),
+                                category.getSection()
+                        )
+                )
+                .toList();
+
+        if (!newCategories.isEmpty()) {
+            homeCategoryRepository.saveAll(newCategories);
         }
+
         return homeCategoryRepository.findAll();
     }
 

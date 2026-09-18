@@ -38,6 +38,6 @@ public class HomeCategoryController {
             @RequestBody HomeCategory category
     ) throws Exception {
         HomeCategory homeCategory = homeCategoryService.updateHomeCategory(category , id);
-        return   new ResponseEntity<>(homeCategory , HttpStatus.OK);
+        return new ResponseEntity<>(homeCategory , HttpStatus.OK);
     }
 }

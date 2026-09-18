@@ -8,12 +8,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/deals")
 public class DealController {
 
     private final DealService dealService;
+
+    @GetMapping()
+    public ResponseEntity<List<Deal>> getDeal(
+    ) {
+        List<Deal> createdDeal = dealService.getDeals();
+        return new ResponseEntity<>(createdDeal , HttpStatus.ACCEPTED);
+    }
 
     @PostMapping()
     public ResponseEntity<Deal> createDeal(

@@ -113,14 +113,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProducts(String category, String brand, String colors, String sizes,
-                                        Integer maxPrice, Integer minPrice, Integer minDiscount,
+                                        Integer minPrice, Integer maxPrice, Integer minDiscount,
                                         String sort, String stock, Integer pageNumber) {
         Specification<Product> spec = (root , query , cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             if(category != null) {
                 Join<Product, Category> categoryJoin = root.join("category");
-                predicates.add(cb.equal(categoryJoin.get("category"), category));
+                predicates.add(cb.equal(categoryJoin.get("categoryId"), category));
             }
 
             if(colors != null && !colors.isEmpty()) {
@@ -140,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
             }
 
             if(minDiscount != null) {
-                predicates.add(cb.equal(root.get("sellingPrice"), minDiscount));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("discountPercent"), minDiscount));
             }
 
             if(stock != null && !stock.isEmpty()) {

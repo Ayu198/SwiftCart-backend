@@ -1,14 +1,18 @@
 package com.swiftcart.ecommerce.modal;
 
 import com.swiftcart.ecommerce.domain.HomeCategorySection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"category_id", "section"}
+                )
+        }
+)
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor

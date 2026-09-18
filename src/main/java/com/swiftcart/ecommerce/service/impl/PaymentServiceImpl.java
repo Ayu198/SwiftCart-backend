@@ -30,11 +30,11 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentOrderRepository paymentOrderRepository;
     private final OrderRepository orderRepository;
 
-    @Value("${razorpay.key.id}")
+    @Value("${RAZORPAY_KEY_ID}")
     private String apiKey;
-    @Value("${razorpay.key.secret}")
+    @Value("${RAZORPAY_KEY_SECRET}")
     private String apiSecret;
-    @Value("${stripe_secret_key}")
+    @Value("${STRIPE_SECRET_KEY}")
     private String stripeSecretKey;
 
     @Override
@@ -119,7 +119,7 @@ public class PaymentServiceImpl implements PaymentService {
         notify.put("email" , true);
         paymentLinkRequest.put("notify", notify);
 
-        paymentLinkRequest.put("callback_url" , "http://localhost:3000/payment-success/" + orderId);
+        paymentLinkRequest.put("callback_url" , "http://localhost:5173/payment-success/" + orderId);
         paymentLinkRequest.put("callback_method" ,"get");
         return paymentLinkRequest;
     }
